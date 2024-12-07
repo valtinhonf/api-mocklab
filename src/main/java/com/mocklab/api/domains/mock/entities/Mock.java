@@ -1,31 +1,60 @@
 package com.mocklab.api.domains.mock.entities;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+import com.mocklab.api.adapter.input.dto.RequestNewMockDTO;
+import com.mocklab.api.domains.mock.enums.StatusMock;
+import jakarta.persistence.*;
+import jakarta.validation.constraints.NotNull;
+import lombok.Data;
+import org.springframework.beans.BeanUtils;
 
 import java.time.ZonedDateTime;
 import java.util.UUID;
 
-@Entity
+@Entity(name = "mocks")
+@Data
 public class Mock {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private UUID idmock;
+    private Long idmock;
+    private UUID idmockpublic;
     private UUID idproject;
+    private UUID iduser;
+    private String path;
     private String name;
     private String description;
     private String observation;
-    private String path;
     private String method;
-    private String status;
-    private Integer statusCodeResponse;
+    @Enumerated(EnumType.STRING)
+    private StatusMock status;
+    @Column(name = "status_code_response", length = 3)
+    private String statusCodeResponse;
+    @Column(name = "response_body")
     private String responseBody;
     private ZonedDateTime createdat;
     private ZonedDateTime updatedat;
-    private ZonedDateTime expiresAt;
+    private ZonedDateTime expiresin;
+
+    @PrePersist
+    void prePersist(){
+        idmockpublic = UUID.randomUUID();
+        createdat = ZonedDateTime.now();
+        updatedat = createdat;
+
+        status = StatusMock.ACTIVE;
+    }
+
+    @PreUpdate
+    void preUpdate(){
+        updatedat = ZonedDateTime.now();
+    }
+
+    public static Mock convert(RequestNewMockDTO newMock){
+        Mock __newMock = new Mock();
+        BeanUtils.copyProperties(newMock, __newMock);
+
+        return __newMock;
+    }
 
 
 }
