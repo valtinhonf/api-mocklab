@@ -2,7 +2,9 @@ package com.mocklab.api.adapter.input.dto;
 
 import com.mocklab.api.domains.mock.entities.Mock;
 import com.mocklab.api.domains.mock.enums.StatusMock;
+import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 import org.springframework.beans.BeanUtils;
 
 import java.time.ZonedDateTime;
@@ -11,7 +13,8 @@ import java.util.List;
 import java.util.UUID;
 
 @Data
-
+@AllArgsConstructor
+@NoArgsConstructor
 public class ResponseMockDTO {
 
     private UUID idmockpublic;

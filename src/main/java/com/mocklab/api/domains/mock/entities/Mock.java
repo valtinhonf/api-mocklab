@@ -4,7 +4,9 @@ import com.mocklab.api.adapter.input.dto.RequestNewMockDTO;
 import com.mocklab.api.domains.mock.enums.StatusMock;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
+import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 import org.springframework.beans.BeanUtils;
 
 import java.time.ZonedDateTime;
@@ -12,6 +14,8 @@ import java.util.UUID;
 
 @Entity(name = "mocks")
 @Data
+@AllArgsConstructor
+@NoArgsConstructor
 public class Mock {
 
     @Id

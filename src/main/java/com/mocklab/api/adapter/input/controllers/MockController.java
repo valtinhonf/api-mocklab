@@ -2,6 +2,7 @@ package com.mocklab.api.adapter.input.controllers;
 
 import com.mocklab.api.adapter.input.dto.RequestNewMockDTO;
 import com.mocklab.api.adapter.input.dto.ResponseMockDTO;
+import com.mocklab.api.domains.mock.dtos.ProjectionMockProjectDTO;
 import com.mocklab.api.domains.mock.entities.Mock;
 import com.mocklab.api.domains.mock.services.MockFindService;
 import com.mocklab.api.domains.mock.services.MockServices;
@@ -42,6 +43,11 @@ public class MockController {
     @GetMapping(value = "/byuser/{userId}", produces = "application/json")
     public ResponseEntity<List<ResponseMockDTO>> listMockFromUser(@PathVariable("userId") String idUser){
         return ResponseEntity.status(HttpStatus.OK).body(mockSrv.findAllByUser(idUser));
+    }
+
+    @GetMapping(value = "/byorganization/{organizationId}")
+    public ResponseEntity<List<ProjectionMockProjectDTO>> listMocksFromOrganization(@PathVariable("organizationId") String organizationId){
+        return ResponseEntity.status(HttpStatus.OK).body(mockSrv.findAllByOrganization(organizationId));
     }
 
     @GetMapping(value = "/{idMock}", produces = "application/json")

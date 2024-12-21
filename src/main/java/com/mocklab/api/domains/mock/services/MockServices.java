@@ -2,6 +2,7 @@ package com.mocklab.api.domains.mock.services;
 
 import com.mocklab.api.adapter.input.dto.RequestNewMockDTO;
 import com.mocklab.api.adapter.input.dto.ResponseMockDTO;
+import com.mocklab.api.domains.mock.dtos.ProjectionMockProjectDTO;
 import com.mocklab.api.domains.mock.entities.Mock;
 import com.mocklab.api.domains.mock.repositories.MockRepository;
 import com.mocklab.api.shared.exceptions.MockIsThisUser;
@@ -61,6 +62,17 @@ public class MockServices {
             List<Mock> mocks = mockRepo.findAllByIduser(UUID.fromString(idUser));
 
             return ResponseMockDTO.convert(mocks);
+        } catch (Exception e){
+            throw e;
+        }
+    }
+
+    public List<ProjectionMockProjectDTO> findAllByOrganization(String idOrganization) {
+        log.info("Trying retrieving organizations's {} mock", idOrganization);
+        try{
+            List<ProjectionMockProjectDTO> mocks = mockRepo.listAllMocksFromOrganizationToHomeGrouped(UUID.fromString(idOrganization));
+
+            return mocks;
         } catch (Exception e){
             throw e;
         }

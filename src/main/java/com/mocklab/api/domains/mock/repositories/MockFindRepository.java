@@ -1,11 +1,14 @@
 package com.mocklab.api.domains.mock.repositories;
 
+import com.mocklab.api.domains.mock.dtos.ProjectionMockProjectDTO;
 import com.mocklab.api.domains.mock.entities.Mock;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.PersistenceContext;
 import jakarta.persistence.Query;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
+
+import java.util.List;
 
 @Service
 @Slf4j
