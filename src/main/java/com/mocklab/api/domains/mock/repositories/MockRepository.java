@@ -24,7 +24,7 @@ public interface MockRepository extends JpaRepository<Mock, Long> {
                            project.idsequence as projectIdSequence, project.name as projectName,
                            project.description as projectDescription, project.observation as projectObservation
                            from projects project
-                           inner join mocks mocks on (mocks.idproject = project.idproject)
+                           left join mocks mocks on (mocks.idproject = project.idproject)
                            where project.idorganization = :idorganization
                            order by project.name, mocks.name
                     """)
