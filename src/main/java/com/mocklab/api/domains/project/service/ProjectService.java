@@ -35,4 +35,7 @@ public class ProjectService {
         }
     }
 
+    public void delete(String idproject) {
+        this.repository.deleteById(UUID.fromString(idproject));
+    }
 }
