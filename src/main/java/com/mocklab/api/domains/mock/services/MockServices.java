@@ -67,10 +67,10 @@ public class MockServices {
         }
     }
 
-    public List<ProjectionMockProjectDTO> findAllByOrganization(String idOrganization) {
+    public List<ProjectionMockProjectDTO> findAllByOrganizationAndUser(String idOrganization, String idUser) {
         log.info("Trying retrieving organizations's {} mock", idOrganization);
         try{
-            List<ProjectionMockProjectDTO> mocks = mockRepo.listAllMocksFromOrganizationToHomeGrouped(UUID.fromString(idOrganization));
+            List<ProjectionMockProjectDTO> mocks = mockRepo.listAllMocksFromOrganizationToHomeGrouped(UUID.fromString(idOrganization), UUID.fromString(idUser));
 
             return mocks;
         } catch (Exception e){

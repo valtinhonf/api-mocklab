@@ -18,6 +18,8 @@ import java.util.UUID;
 public class ResponseMockDTO {
 
     private UUID idmockpublic;
+    private UUID idproject;
+    private UUID iduser;
     private String path;
     private String method;
     private String statusCodeResponse;

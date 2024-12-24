@@ -12,6 +12,7 @@ public interface ProjectionMockProjectDTO {
     String getObservation();
     String getMethod();
     String getStatus();
+    String getProjectPublicId();
     Integer getProjectIdSequence();
     String getProjectName();
     String getProjectDescription();

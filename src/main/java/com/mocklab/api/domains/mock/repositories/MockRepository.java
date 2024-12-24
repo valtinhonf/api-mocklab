@@ -21,12 +21,14 @@ public interface MockRepository extends JpaRepository<Mock, Long> {
     value = """
                     select mocks.idmockpublic, mocks.idproject, mocks.iduser, mocks.path, mocks.name,
                            mocks.description, mocks.observation, mocks.method, mocks.status,
-                           project.idsequence as projectIdSequence, project.name as projectName,
-                           project.description as projectDescription, project.observation as projectObservation
-                           from projects project
-                           left join mocks mocks on (mocks.idproject = project.idproject)
-                           where project.idorganization = :idorganization
+                           project.idproject as projectPublicId, project.idsequence as projectIdSequence, 
+                           project.name as projectName, project.description as projectDescription, 
+                           project.observation as projectObservation
+                           from mocks mocks
+                           full outer join projects project on (mocks.idproject = project.idproject)
+                           where project.idorganization = :idorganization or mocks.iduser = :iduser
                            order by project.name, mocks.name
                     """)
-    List<ProjectionMockProjectDTO> listAllMocksFromOrganizationToHomeGrouped(@Param("idorganization")UUID idOrganization);
+    List<ProjectionMockProjectDTO> listAllMocksFromOrganizationToHomeGrouped(@Param("idorganization")UUID idOrganization,
+                                                                             @Param("iduser")UUID idUser);
 }

@@ -20,4 +20,13 @@ public class ExceptionsMockLabHandler {
         return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(new ApiError(LocalDateTime.now(), errorMessage));
     }
 
+    @ExceptionHandler(SchemaPostValidationException.class)
+    protected ResponseEntity<Object> ErroOnValidadeSchemaOnPostPut(SchemaPostValidationException spve){
+        String errorMessage =spve.getLocalizedMessage();
+        if (Objects.isNull(errorMessage) || errorMessage.equals("")){
+            errorMessage = "Request body is not validate with the Schema!";
+        }
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new ApiError(LocalDateTime.now(), errorMessage));
+    }
+
 }

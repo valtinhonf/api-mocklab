@@ -6,8 +6,6 @@ import com.mocklab.api.domains.mock.dtos.ProjectionMockProjectDTO;
 import com.mocklab.api.domains.mock.entities.Mock;
 import com.mocklab.api.domains.mock.services.MockFindService;
 import com.mocklab.api.domains.mock.services.MockServices;
-import feign.Headers;
-import feign.Request;
 import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
@@ -45,9 +43,10 @@ public class MockController {
         return ResponseEntity.status(HttpStatus.OK).body(mockSrv.findAllByUser(idUser));
     }
 
-    @GetMapping(value = "/byorganization/{organizationId}")
-    public ResponseEntity<List<ProjectionMockProjectDTO>> listMocksFromOrganization(@PathVariable("organizationId") String organizationId){
-        return ResponseEntity.status(HttpStatus.OK).body(mockSrv.findAllByOrganization(organizationId));
+    @GetMapping(value = "/byorganization/{organizationId}/{userId}")
+    public ResponseEntity<List<ProjectionMockProjectDTO>> listMocksFromOrganization(@PathVariable("organizationId") String organizationId,
+                                                                                    @PathVariable("userId") String userId){
+        return ResponseEntity.status(HttpStatus.OK).body(mockSrv.findAllByOrganizationAndUser(organizationId, userId));
     }
 
     @GetMapping(value = "/{idMock}", produces = "application/json")
@@ -66,12 +65,13 @@ public class MockController {
             HttpServletRequest request,
             @PathVariable("userId") String mockId,
             @RequestHeader Map<String, String> headers,
-            @RequestParam Map<String, String> queryParams
+            @RequestParam Map<String, String> queryParams,
+            @RequestBody Object body
     ) throws Exception{
 
         String qry = request.getQueryString();
         HttpHeaders _headers = new HttpHeaders();
-        Mock mock = this.mockFindService.findMock(request.getRequestURI(), request.getMethod(), mockId);
+        Mock mock = this.mockFindService.findMock(request.getRequestURI(), request.getMethod(), mockId, body);
 
         return ResponseEntity.status(Integer.parseInt(mock.getStatusCodeResponse()))
                 .headers(_headers)
